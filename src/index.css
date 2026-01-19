@@ -36,15 +36,14 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
-  body {
-    background: var(--bg-gradient-dark);
-    color: var(--text-primary-dark);
-  }
-  
   :root {
     --glass-bg: var(--glass-bg-dark);
     --glass-border: var(--glass-border-dark);
     --glass-shadow: var(--glass-shadow-dark);
+  }
+  body {
+    background: var(--bg-gradient-dark);
+    color: var(--text-primary-dark);
   }
 }
 
@@ -54,6 +53,27 @@ body {
     --glass-border: var(--glass-border-light);
     --glass-shadow: var(--glass-shadow-light);
   }
+}
+
+/* Manual Overrides */
+body.dark {
+  background: var(--bg-gradient-dark);
+  color: var(--text-primary-dark);
+}
+body.dark {
+  --glass-bg: var(--glass-bg-dark);
+  --glass-border: var(--glass-border-dark);
+  --glass-shadow: var(--glass-shadow-dark);
+}
+
+body.light {
+  background: var(--bg-gradient-light);
+  color: var(--text-primary-light);
+}
+body.light {
+  --glass-bg: var(--glass-bg-light);
+  --glass-border: var(--glass-border-light);
+  --glass-shadow: var(--glass-shadow-light);
 }
 
 /* Utilities */

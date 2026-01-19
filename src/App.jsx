@@ -3,22 +3,54 @@ import Header from './components/Header';
 import FAB from './components/FAB';
 import TaskItem from './components/TaskItem';
 import { useTodos } from './hooks/useTodos';
+import SettingsModal from './components/SettingsModal';
 import { AnimatePresence, motion, Reorder } from 'framer-motion';
 
 function App() {
   const { todos, loading, addTodo, toggleTodo, deleteTodo, updateTodo, reorderTodos } = useTodos();
   const [isAdding, setIsAdding] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [inputText, setInputText] = useState('');
   const [selectedPriority, setSelectedPriority] = useState('medium');
   const [dueDate, setDueDate] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [theme, setTheme] = useState('system'); // system, light, dark
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    // Load theme
+    const savedTheme = localStorage.getItem('theme') || 'system';
+    setTheme(savedTheme);
+  }, []);
+
+  useEffect(() => {
+    // Apply theme
+    const root = document.body;
+    root.classList.remove('light', 'dark');
+    if (theme === 'system') {
+      // Clean up classes, let media query take over
+      localStorage.removeItem('theme'); // Optional: keep clean
+    } else {
+      root.classList.add(theme);
+      localStorage.setItem('theme', theme);
+    }
+  }, [theme]);
 
   useEffect(() => {
     if (isAdding && inputRef.current) {
       inputRef.current.focus();
     }
   }, [isAdding]);
+
+  const handleClearData = () => {
+    // We need a way to clear data. 
+    // Since useTodos manages state, we can iterate and delete or expose a clear function.
+    // For now, let's just use deleteTodo on all IDs since we don't have clearTodos in hook.
+    // Or better, we can manually clear storage if we want to be aggressive, 
+    // but updating state via hook is safer for UI consistency.
+    // Let's iterate backwards or copy the array.
+    [...todos].forEach(t => deleteTodo(t.id));
+  };
 
   const handleAddSubmit = (e) => {
     e.preventDefault();
@@ -56,7 +88,19 @@ function App() {
 
   return (
     <div className="app-container" style={{ padding: '20px', paddingBottom: '80px', minHeight: '100vh', boxSizing: 'border-box', position: 'relative' }}>
-      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <Header 
+        searchQuery={searchQuery} 
+        setSearchQuery={setSearchQuery} 
+        onSettingsClick={() => setIsSettingsOpen(true)}
+      />
+      
+      <SettingsModal 
+        isOpen={isSettingsOpen} 
+        onClose={() => setIsSettingsOpen(false)}
+        theme={theme}
+        setTheme={setTheme}
+        onClearData={handleClearData}
+      />
       
       <main>
         <AnimatePresence mode="wait">
