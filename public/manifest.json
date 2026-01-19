@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Glass Todo",
+  "version": "1.0.0",
+  "description": "A modern, minimal TODO extension with glassmorphism design.",
+  "permissions": [
+    "storage"
+  ],
+  "action": {
+    "default_popup": "index.html"
+  }
+}
