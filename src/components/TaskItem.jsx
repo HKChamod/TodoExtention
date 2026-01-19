@@ -31,7 +31,7 @@ export default function TaskItem({ task, onToggle, onDelete, onUpdate }) {
         justifyContent: 'space-between',
         cursor: 'default',
         background: task.completed ? 'rgba(255,255,255,0.3)' : 'var(--glass-bg)',
-        borderLeft: `4px solid ${priorityColors[task.priority] || priorityColors.medium}`
+        borderLeft: `4px solid ${task.customColor || priorityColors[task.priority] || priorityColors.medium}`
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', overflow: 'hidden', flex: 1 }}>

@@ -53,7 +53,12 @@ export function useTodos() {
     saveTodos();
   }, [todos, loading]);
 
-  const addTodo = (text, priority = "medium", dueDate = null) => {
+  const addTodo = (
+    text,
+    priority = "medium",
+    dueDate = null,
+    customColor = null,
+  ) => {
     // Extract tags (words starting with #)
     const tags = text.match(/#\w+/g) || [];
     const cleanText = text.replace(/#\w+/g, "").trim();
@@ -65,6 +70,7 @@ export function useTodos() {
       priority,
       tags,
       dueDate,
+      customColor,
       createdAt: Date.now(),
     };
     setTodos((prev) => [newTodo, ...prev]);

@@ -13,6 +13,7 @@ function App() {
   const [inputText, setInputText] = useState('');
   const [selectedPriority, setSelectedPriority] = useState('medium');
   const [dueDate, setDueDate] = useState('');
+  const [customColor, setCustomColor] = useState('#6366f1'); // Default accent
   const [searchQuery, setSearchQuery] = useState('');
   const [theme, setTheme] = useState('system'); // system, light, dark
   const inputRef = useRef(null);
@@ -55,10 +56,11 @@ function App() {
   const handleAddSubmit = (e) => {
     e.preventDefault();
     if (inputText.trim()) {
-      addTodo(inputText.trim(), selectedPriority, dueDate || null);
+      addTodo(inputText.trim(), selectedPriority, dueDate || null, customColor);
       setInputText('');
       setSelectedPriority('medium');
       setDueDate('');
+      setCustomColor('#6366f1');
       setIsAdding(false);
     }
   };
@@ -231,6 +233,20 @@ function App() {
                                 padding: '4px',
                                 fontFamily: 'inherit',
                                 color: 'var(--text-primary-light)'
+                            }}
+                        />
+                        <div style={{ width: '1px', height: '20px', background: 'var(--glass-border)', margin: '0 4px' }} />
+                        <span style={{ fontSize: '12px', color: 'var(--text-secondary-light)' }}>Color:</span>
+                        <input
+                            type="color"
+                            value={customColor}
+                            onChange={(e) => setCustomColor(e.target.value)}
+                            style={{
+                                border: 'none',
+                                width: '24px',
+                                height: '24px',
+                                cursor: 'pointer',
+                                background: 'transparent'
                             }}
                         />
                     </div>
